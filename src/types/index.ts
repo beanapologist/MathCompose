@@ -69,7 +69,7 @@ export interface SolverResult {
   logs: SolverLog[];
   metadata?: {
     constants?: Record<string, number>;
-    intermediateValues?: Record<string, number | string>;
+    intermediateValues?: Record<string, number | string | boolean>;
     formulaUsed?: string;
   };
 }

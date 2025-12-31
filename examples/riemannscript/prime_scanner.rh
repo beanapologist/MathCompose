@@ -1,0 +1,26 @@
+# prime_scanner.rh – Scan for primes via spectral resonance
+# Uses the η-governor to find prime pulses
+
+pulse count = 0
+phase accumulated_phase = 0.0
+
+for n = 2 to 100:
+    pulse resonance = resonate(n)
+    if resonance > 0:
+        zero imaginary_height = 0.5 + (n * ETA)j
+        phase psi = arg(zeta(imaginary_height))
+
+        accumulated_phase += psi * ETA
+        count += 1
+
+        print "Prime found: " n " | Height: " Im(imaginary_height) " | Phase: " psi
+
+fallback:
+    if abs(accumulated_phase) > PHI:  # Golden ratio threshold
+        accumulated_phase = damp(accumulated_phase)
+        print "Phase overflow - η-damping applied"
+
+print "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+print "Total primes found: " count
+print "Accumulated phase: " accumulated_phase
+print "Governor stable: " (abs(accumulated_phase) < PHI)

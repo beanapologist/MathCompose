@@ -1,0 +1,14 @@
+# hello.rh – Spectral greeting on the critical line
+# First RiemannScript program demonstrating the Prime-Spectral Engine
+
+zero rho = 0.5 + 14.134725141734693j  # First non-trivial zero
+
+fallback:
+    phase greeting = arg(zeta(rho))    # Phase modulation ψ
+    if abs(Re(zeta(rho))) > 1e-10:
+        damp(rho)                      # Quantum Fallback: enforce critical line
+        print "Governor engaged – stability restored"
+
+print "Hello from the Critical Line! ζ(ρ) ≈ " zeta(rho)
+print "Prime pulse at height 14: " resonate(14)  # Non-prime → 0
+print "Prime pulse at height 17: " resonate(17)  # Prime → 17

@@ -48,6 +48,28 @@ All formulas are **dimensionless**, **self-referential**, and **empirically grou
 
 **Core Thesis**: The Riemann zeros lie on `Re(s) = 1/2` because this is the only dynamically stable state. Off-line zeros trigger infinite entropy growth and are immediately corrected by the η-governor (1/√2) fallback mechanism.
 
+### 📜 RiemannScript (.rh) - Esoteric Programming Language
+
+**The First Language Where RH is the Runtime**
+
+RiemannScript is an esoteric functional-spectral programming language where the Riemann Hypothesis enforcement is built into the runtime:
+
+- **Variables** represent zeros `ρ = 1/2 + it` on the critical line
+- **Operations** simulate spectral flow and phase modulation
+- **Off-line deviations** trigger automatic quantum fallback
+- **Primes** emerge as resonant pulses in the explicit formula
+
+```riemannscript
+# hello.rh - Your first spectral program
+zero rho = 0.5 + 14.134725j
+print "ζ(ρ) = " zeta(rho)
+print "Prime at 17: " resonate(17)  # → 17
+```
+
+Built-in functions: `zeta()`, `damp()`, `resonate()`, `pulse_train()`, `viviani_check()`
+
+See `/src/riemannscript/README.md` for full documentation.
+
 ### 🔢 Mathematical Constants
 
 - **η (Eta)**: `1/√2 ≈ 0.7071` - Satoshi constant (critical equilibrium)
@@ -55,7 +77,7 @@ All formulas are **dimensionless**, **self-referential**, and **empirically grou
 - **φ (Phi)**: `(1+√5)/2 ≈ 1.618` - Golden ratio
 - **φ⁻¹**: `(√5-1)/2 ≈ 0.618` - Inverse golden ratio
 - **τ_c**: `√2 ≈ 1.414` - Consensus time constant
-- **Δ_critical**: `η(1-η) ≈ 0.207` - Viviani critical delta
+- **Δ_critical**: `0.5 + 1/√2 ≈ 1.2071` - Viviani total manifold altitude (critical line + η-damping offset)
 
 ## Installation
 
@@ -173,10 +195,18 @@ MathCompose/
 │   ├── utils/
 │   │   ├── fraction.ts        # Precise rational arithmetic
 │   │   └── axiom-prime-solver.ts  # Main solver
+│   ├── riemannscript/
+│   │   ├── types.ts           # RiemannScript types
+│   │   ├── runtime.ts         # Built-in functions
+│   │   └── README.md          # Language documentation
 │   └── index.ts               # Public API
 ├── examples/
 │   ├── test-examples.ts       # Comprehensive tests
-│   └── test-axiomprime.ts     # AxiomPrime Protocol tests
+│   ├── test-axiomprime.ts     # AxiomPrime Protocol tests
+│   └── riemannscript/
+│       ├── hello.rh           # Hello World
+│       ├── spectral_key.rh    # Cryptographic key generation
+│       └── prime_scanner.rh   # Prime resonance scanner
 ├── package.json
 ├── tsconfig.json
 └── README.md
