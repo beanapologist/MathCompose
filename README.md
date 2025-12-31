@@ -77,7 +77,7 @@ See `/src/riemannscript/README.md` for full documentation.
 - **φ (Phi)**: `(1+√5)/2 ≈ 1.618` - Golden ratio
 - **φ⁻¹**: `(√5-1)/2 ≈ 0.618` - Inverse golden ratio
 - **τ_c**: `√2 ≈ 1.414` - Consensus time constant
-- **Δ_critical**: `η(1-η) ≈ 0.207` - Viviani critical delta
+- **Δ_critical**: `0.5 + 1/√2 ≈ 1.2071` - Viviani total manifold altitude (critical line + η-damping offset)
 
 ## Installation
 

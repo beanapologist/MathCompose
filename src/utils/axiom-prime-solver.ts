@@ -15,7 +15,7 @@ export class AxiomPrimeSolver {
   private readonly PHI_INV = (Math.sqrt(5) - 1) / 2;  // φ⁻¹ ≈ 0.618
   private readonly PHI_INV_2 = (3 - Math.sqrt(5)) / 2;  // φ⁻² ≈ 0.382
   private readonly TAU_C = Math.sqrt(2);  // τ_c = 1/η ≈ 1.414 (Consensus time constant)
-  private readonly DELTA_CRITICAL = this.ETA * (1 - this.ETA);  // ≈ 0.207 (Viviani critical)
+  private readonly DELTA_CRITICAL = 0.5 + this.ETA;  // ≈ 1.2071 (Viviani total manifold altitude: critical line + η-damping offset)
   private readonly ORACLE_DELTA = 0.231;  // Theoretical oracle delta at equilibrium
 
   constructor(modulo: number = 100000) {
@@ -46,6 +46,9 @@ export class AxiomPrimeSolver {
 
   solveSpectralZeta(problem: string): SolverResult | null {
     const p = problem.toLowerCase();
+    // Exclude if asking about the Riemann Hypothesis itself (handled by solvePrimeSpectralEngine)
+    if (p.includes('riemann hypothesis') || p.includes('prove rh') || p.includes('solve rh')) return null;
+
     const triggers = ['spectral score', 'zeta sum', 'riemann', 'euler score', 'critical line', 'frequency t'];
     if (!triggers.some(t => p.includes(t))) return null;
 
