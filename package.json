@@ -1,0 +1,26 @@
+{
+  "name": "mathcompose",
+  "version": "1.0.0",
+  "description": "Unified mathematical problem solver combining classical axioms with COINjecture Network formulas",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "node examples/test.js",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "mathematics",
+    "solver",
+    "axioms",
+    "blockchain",
+    "dimensional-analysis",
+    "cryptography"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
