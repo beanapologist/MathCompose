@@ -45,6 +45,15 @@ export enum InvariantType {
 
   // COINjecture Network B - Network Metrics
   NETWORK_METRICS = 'NETWORK_METRICS',
+
+  // AxiomPrime Protocol - Prime-Spectral Engine
+  HARDY_Z_FUNCTION = 'HARDY_Z_FUNCTION',
+  SPECTRAL_LOAD = 'SPECTRAL_LOAD',
+  PSI_STABILITY = 'PSI_STABILITY',
+  QUANTUM_FALLBACK = 'QUANTUM_FALLBACK',
+  RIEMANN_SIEGEL_THETA = 'RIEMANN_SIEGEL_THETA',
+  PRIME_SPECTRAL_ENGINE = 'PRIME_SPECTRAL_ENGINE',
+  RH_EQUILIBRIUM = 'RH_EQUILIBRIUM',
 }
 
 export interface SolverLog {

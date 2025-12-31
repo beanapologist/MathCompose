@@ -36,6 +36,18 @@ All formulas are **dimensionless**, **self-referential**, and **empirically grou
 7. **Staking Multiplier** - `M = 1 + (λ × coverage × Δ_critical)`
 8. **Burn Rate** - `burn_rate = λ · work / supply`
 
+### ⚛️ AxiomPrime Protocol - Prime-Spectral Engine
+
+**Riemann Hypothesis as Dynamical Equilibrium**
+
+1. **Hardy Z-Function** - `Z(t) = e^(iθ(t)) ζ(1/2 + it)` - Real-valued on critical line
+2. **Spectral Load** - `N(T) ≈ (T/2π) log(T/2πe) + 7/8` - Zero counting
+3. **ψ-Stability Monitor** - `cos(θ + drift)` - Phase stability tracking
+4. **Quantum Fallback** - `σ → 0.5; t → t×η; E → E×η` - Off-line correction
+5. **Prime-Spectral Engine** - Complete RH equilibrium protocol
+
+**Core Thesis**: The Riemann zeros lie on `Re(s) = 1/2` because this is the only dynamically stable state. Off-line zeros trigger infinite entropy growth and are immediately corrected by the η-governor (1/√2) fallback mechanism.
+
 ### 🔢 Mathematical Constants
 
 - **η (Eta)**: `1/√2 ≈ 0.7071` - Satoshi constant (critical equilibrium)
@@ -129,6 +141,28 @@ node dist/examples/test-examples.js
 "Calculate burn rate with work=1000000 and supply=50000000"
 ```
 
+### AxiomPrime Protocol
+
+```typescript
+// Solve the Riemann Hypothesis
+"Solve the Riemann Hypothesis at t=1000"
+
+// Hardy Z-Function
+"Calculate Hardy Z-function at t=14.1347"
+
+// Spectral Load (Zero Counting)
+"How many zeros up to t=1000?"
+
+// ψ-Stability Monitor
+"Check psi stability at t=100"
+
+// Quantum Fallback (On-Line)
+"Check quantum fallback for sigma=0.5, t=100"
+
+// Quantum Fallback (Off-Line Correction)
+"Apply quantum fallback for sigma=0.7, t=100, energy=1.5"
+```
+
 ## Architecture
 
 ```
@@ -141,7 +175,8 @@ MathCompose/
 │   │   └── axiom-prime-solver.ts  # Main solver
 │   └── index.ts               # Public API
 ├── examples/
-│   └── test-examples.ts       # Comprehensive tests
+│   ├── test-examples.ts       # Comprehensive tests
+│   └── test-axiomprime.ts     # AxiomPrime Protocol tests
 ├── package.json
 ├── tsconfig.json
 └── README.md
@@ -173,9 +208,10 @@ All formulas adhere to three principles:
 
 ## Formula Compliance
 
-- ✅ **56 formulas** documented and implemented
+- ✅ **60+ formulas** documented and implemented
 - ✅ **100% compliance** with dimensionless/self-referential/empirical principles
-- ✅ **14 solver methods** covering both classical and modern mathematics
+- ✅ **22 solver methods** covering classical, modern, and spectral mathematics
+- ✅ **AxiomPrime Protocol V2** - Riemann Hypothesis as dynamical equilibrium
 
 ## Documentation
 
@@ -230,6 +266,13 @@ class AxiomPrimeSolver {
   solveReputationScore(problem: string): SolverResult | null;
   solveStakingMultiplier(problem: string): SolverResult | null;
   solveBurnRate(problem: string): SolverResult | null;
+
+  // AxiomPrime Protocol solvers
+  solvePrimeSpectralEngine(problem: string): SolverResult | null;
+  solveHardyZ(problem: string): SolverResult | null;
+  solveSpectralLoad(problem: string): SolverResult | null;
+  solvePsiStability(problem: string): SolverResult | null;
+  solveQuantumFallback(problem: string): SolverResult | null;
 }
 ```
 
