@@ -1211,6 +1211,171 @@ export class AxiomPrimeSolver {
   }
 
   /**
+   * UNIVERSAL METALLIC-RATIO EQUILIBRIUM
+   * Computes equilibrium coordinates on L1 simplex or L2 sphere
+   * using metallic ratios (Golden, Silver, Bronze, etc.)
+   */
+  solveMetallicRatioEquilibrium(problem: string): SolverResult | null {
+    const p = problem.toLowerCase();
+    const triggers = ['metallic ratio', 'golden ratio', 'silver ratio', 'bronze ratio', 'simplex equilibrium', 'sphere equilibrium', 'metallic equilibrium'];
+    if (!triggers.some(t => p.includes(t))) return null;
+
+    // Extract order m (1=golden, 2=silver, 3=bronze, etc.)
+    let m = 1; // Default to golden ratio
+    if (p.includes('silver')) m = 2;
+    else if (p.includes('bronze')) m = 3;
+    else if (p.includes('copper')) m = 4;
+    else {
+      const mMatch = problem.match(/\bm\s*=\s*(\d+)/i);
+      if (mMatch) m = parseInt(mMatch[1]);
+    }
+
+    // Extract dimension n
+    let n = 3; // Default
+    const nMatch = problem.match(/\bn\s*=\s*(\d+)/i);
+    if (nMatch) n = parseInt(nMatch[1]);
+
+    // Determine manifold type
+    let manifoldType: 'simplex' | 'sphere' = 'sphere';
+    let constraintValue = 1.0;
+
+    if (p.includes('simplex') || p.includes('sum') || p.includes('l1')) {
+      manifoldType = 'simplex';
+      const SMatch = problem.match(/\bS\s*=\s*(\d+(?:\.\d+)?)/i);
+      if (SMatch) constraintValue = parseFloat(SMatch[1]);
+    } else {
+      manifoldType = 'sphere';
+      const RMatch = problem.match(/\bR\s*=\s*(\d+(?:\.\d+)?)/i);
+      if (RMatch) constraintValue = parseFloat(RMatch[1]);
+    }
+
+    // Step 1: Compute metallic ratio ρ
+    const rho = (m + Math.sqrt(m * m + 4)) / 2;
+
+    // Step 2: Compute κ based on manifold
+    let kappa: number;
+    if (manifoldType === 'simplex') {
+      // κ = S(1 - ρ⁻¹) / (1 - ρ⁻ⁿ)
+      kappa = (constraintValue * (1 - Math.pow(rho, -1))) / (1 - Math.pow(rho, -n));
+    } else {
+      // κ = √(R²(1 - ρ⁻²) / (1 - ρ⁻²ⁿ))
+      const numerator = constraintValue * constraintValue * (1 - Math.pow(rho, -2));
+      const denominator = 1 - Math.pow(rho, -2 * n);
+      kappa = Math.sqrt(numerator / denominator);
+    }
+
+    // Step 3: Compute components x_k = κ · ρ^(-(k-1))
+    const components: number[] = [];
+    const componentNames = ['η', 'λ', 'γ', 'δ', 'ε', 'ζ', 'θ', 'ι', 'κ', 'μ'];
+    for (let k = 1; k <= n; k++) {
+      const x_k = kappa * Math.pow(rho, -(k - 1));
+      components.push(x_k);
+    }
+
+    // Verify constraint
+    let verification: number;
+    if (manifoldType === 'simplex') {
+      verification = components.reduce((sum, x) => sum + x, 0);
+    } else {
+      verification = Math.sqrt(components.reduce((sum, x) => sum + x * x, 0));
+    }
+
+    const ratioNames = ['Golden φ', 'Silver δₛ', 'Bronze δᵦ', 'Copper', 'Nickel'];
+    const ratioName = ratioNames[m - 1] || `m=${m}`;
+
+    const steps: string[] = [
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      `UNIVERSAL METALLIC-RATIO EQUILIBRIUM`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      ``,
+      `STEP 1: Metallic Ratio`,
+      `  Order m = ${m} (${ratioName})`,
+      `  ρ = (${m} + √(${m}² + 4))/2`,
+      `  ρ ≈ ${rho.toFixed(6)}`,
+      ``,
+      `STEP 2: Scaling Factor κ`,
+      `  Manifold: ${manifoldType.toUpperCase()}`,
+      manifoldType === 'simplex'
+        ? `  Constraint: Σx_k = ${constraintValue}`
+        : `  Constraint: √(Σx_k²) = ${constraintValue}`,
+      `  κ ≈ ${kappa.toFixed(6)}`,
+      ``,
+      `STEP 3: Equilibrium Components`,
+      `  Formula: x_k = κ · ρ^(-(k-1))`,
+      ``
+    ];
+
+    for (let k = 0; k < n; k++) {
+      const varName = k < componentNames.length ? componentNames[k] : `x_${k + 1}`;
+      steps.push(`  ${varName} = ${components[k].toFixed(6)}`);
+    }
+
+    steps.push(
+      ``,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      `VERIFICATION`,
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+      manifoldType === 'simplex'
+        ? `  Σx_k = ${verification.toFixed(6)}`
+        : `  √(Σx_k²) = ${verification.toFixed(6)}`,
+      `  Target = ${constraintValue.toFixed(6)}`,
+      `  Error = ${Math.abs(verification - constraintValue).toExponential(2)}`,
+      `  Status: ${Math.abs(verification - constraintValue) < 1e-10 ? '✓ SATISFIED' : '⚠ DEVIATION'}`
+    );
+
+    const logs: SolverLog[] = [
+      this.createLog(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'info'),
+      this.createLog(`METALLIC-RATIO EQUILIBRIUM SOLVER`, 'info'),
+      this.createLog(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`, 'info'),
+      this.createLog(`${ratioName} (ρ ≈ ${rho.toFixed(4)}) on ${manifoldType}`, 'info'),
+      this.createLog(`Dimension n = ${n}`, 'info')
+    ];
+
+    for (let k = 0; k < n; k++) {
+      const varName = k < componentNames.length ? componentNames[k] : `x_${k + 1}`;
+      logs.push(this.createLog(`  ${varName} = ${components[k].toFixed(6)}`, 'success'));
+    }
+
+    logs.push(
+      this.createLog(`Constraint verification: ${verification.toFixed(6)} ≈ ${constraintValue}`, 'success'),
+      this.createLog(`Equilibrium established ✓`, 'success')
+    );
+
+    const answer = components.map((c, i) => {
+      const varName = i < componentNames.length ? componentNames[i] : `x_${i + 1}`;
+      return `${varName}=${c.toFixed(6)}`;
+    }).join(', ');
+
+    const intermediateValues: Record<string, number | string | boolean> = {
+      m,
+      n,
+      rho,
+      kappa,
+      manifold: manifoldType,
+      constraintValue,
+      verification,
+      error: Math.abs(verification - constraintValue)
+    };
+
+    components.forEach((c, i) => {
+      const varName = i < componentNames.length ? componentNames[i] : `x_${i + 1}`;
+      intermediateValues[varName] = c;
+    });
+
+    return {
+      answer,
+      invariantUsed: InvariantType.METALLIC_RATIO,
+      steps,
+      logs,
+      metadata: {
+        constants: { rho, kappa },
+        intermediateValues,
+        formulaUsed: `Metallic Ratio m=${m}: ρ = (m + √(m² + 4))/2; x_k = κ · ρ^(-(k-1))`
+      }
+    };
+  }
+
+  /**
    * Main solver - tries all solvers in sequence
    */
   async solve(problem: string): Promise<SolverResult> {
@@ -1242,6 +1407,9 @@ export class AxiomPrimeSolver {
       () => this.solveSpectralLoad(problem),
       () => this.solvePsiStability(problem),
       () => this.solveQuantumFallback(problem),
+
+      // Universal Metallic-Ratio Equilibrium
+      () => this.solveMetallicRatioEquilibrium(problem),
     ];
 
     for (const solver of solvers) {

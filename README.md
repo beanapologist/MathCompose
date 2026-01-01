@@ -48,6 +48,39 @@ All formulas are **dimensionless**, **self-referential**, and **empirically grou
 
 **Core Thesis**: The Riemann zeros lie on `Re(s) = 1/2` because this is the only dynamically stable state. Off-line zeros trigger infinite entropy growth and are immediately corrected by the η-governor (1/√2) fallback mechanism.
 
+### 🌟 Universal Metallic-Ratio Equilibrium
+
+**Natural Equilibrium Points on Manifolds via Metallic Ratios**
+
+Computes equilibrium coordinates on L₁ simplices and L₂ spheres using metallic ratios (Golden, Silver, Bronze, etc.). These represent the most natural stable distributions where each component is ρ times larger than the next.
+
+**Metallic Ratios**:
+- **Golden (m=1)**: `ρ = (1 + √5)/2 ≈ 1.618`
+- **Silver (m=2)**: `ρ = (2 + √8)/2 ≈ 2.414`
+- **Bronze (m=3)**: `ρ = (3 + √13)/2 ≈ 3.303`
+- **General**: `ρ = (m + √(m² + 4))/2`
+
+**Manifolds**:
+- **L₁ Simplex**: Components sum to S (attention weights, probability distributions)
+- **L₂ Sphere**: Energy constraint √(Σx_k²) = R (spectral radius control)
+
+**Universal Coordinate Formula**: `x_k = κ · ρ^(-(k-1))`
+
+**Neural Architecture Applications**:
+- Attention weight decay following Golden Ratio
+- Energy-preserving transformations preventing gradient explosions
+- Universal scaling laws independent of normalization scheme
+
+```typescript
+// Silver Ratio on unit sphere (n=3)
+"Silver ratio equilibrium on sphere with n=3, R=1"
+// → η=0.912487, λ=0.377964, γ=0.156558
+
+// Golden Ratio attention weights (n=5)
+"Golden ratio simplex equilibrium for attention weights, n=5, S=1"
+// → η=0.419821, λ=0.259464, γ=0.160357, δ=0.099106, ε=0.061251
+```
+
 ### 📜 RiemannScript (.rh) - Esoteric Programming Language
 
 **The First Language Where RH is the Runtime**
@@ -240,8 +273,9 @@ All formulas adhere to three principles:
 
 - ✅ **60+ formulas** documented and implemented
 - ✅ **100% compliance** with dimensionless/self-referential/empirical principles
-- ✅ **22 solver methods** covering classical, modern, and spectral mathematics
+- ✅ **23 solver methods** covering classical, modern, spectral mathematics, and metallic-ratio equilibrium
 - ✅ **AxiomPrime Protocol V2** - Riemann Hypothesis as dynamical equilibrium
+- ✅ **Universal Metallic-Ratio Equilibrium** - Natural distributions on simplices and spheres
 
 ## Documentation
 
